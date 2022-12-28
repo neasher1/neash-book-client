@@ -1,30 +1,30 @@
-import React from 'react';
-import { Link } from 'react-router-dom';
+import React, { useContext } from 'react';
+import { toast } from 'react-hot-toast';
+import { Link, useLocation, useNavigate } from 'react-router-dom';
+import { AuthContext } from '../../contexts/AuthProvider';
 
 const Navbar = () => {
 
-    // const { user, logOut } = useContext(AuthContext);
-    // const navigate = useNavigate();
-    // const location = useLocation();
+    const { user, logOut } = useContext(AuthContext);
+    const navigate = useNavigate();
+    const location = useLocation();
 
-    // const handleLogOut = () => {
-    //     logOut()
-    //         .then(() => {
-    //             toast.success("Sign Out Successfully");
-    //             navigate('/');
-    //         })
-    //         .catch(error => {
-    //             toast.error(error.message);
-    //         })
-    // }
+    const handleLogOut = () => {
+        logOut()
+            .then(() => {
+                toast.success("Sign Out Successfully");
+                navigate('/');
+            })
+            .catch(error => {
+                toast.error(error.message);
+            })
+    }
 
     const menuItems = <>
         <li><Link to='/'>Home</Link></li>
         <li><Link to='/media'>Media</Link></li>
         <li><Link to='/about'>About</Link></li>
-        <li><Link to='/login'>Login</Link></li>
-        <li><Link to='/register'>Register</Link></li>
-        {/* {
+        {
             user?.uid ?
                 <li><Link onClick={handleLogOut}>Sign Out</Link></li>
                 :
@@ -32,7 +32,7 @@ const Navbar = () => {
                     <li><Link to='/login'>Login</Link></li>
                     <li><Link to='/register'>Register</Link></li>
                 </>
-        } */}
+        }
     </>
 
     return (
