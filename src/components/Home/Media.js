@@ -5,7 +5,7 @@ import MediaCard from './MediaCard';
 
 const Media = () => {
 
-    const { data: posts = [], isLoading } = useQuery({
+    const { data: posts = [], isLoading, refetch } = useQuery({
         queryKey: ['posts'],
         queryFn: async () => {
             try {
@@ -18,13 +18,14 @@ const Media = () => {
             }
         }
     });
+    refetch();
 
     if (isLoading) {
         return <Spinner></Spinner>;
     }
 
     return (
-        <div className='grid grid-cols-1 md:grid-cols-3 gap-8 mx-4 my-12'>
+        <div className='grid grid-cols-1 mx-4 my-12'>
             {
                 posts.map(post => <MediaCard
                     key={post._id}
