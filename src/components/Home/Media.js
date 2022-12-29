@@ -1,9 +1,11 @@
 import { useQuery } from '@tanstack/react-query';
-import React from 'react';
+import React, { useContext } from 'react';
+import { AuthContext } from '../../contexts/AuthProvider';
 import Spinner from '../shared/Spinner';
 import MediaCard from './MediaCard';
 
 const Media = () => {
+    const { user } = useContext(AuthContext);
 
     const { data: posts = [], isLoading, refetch } = useQuery({
         queryKey: ['posts'],

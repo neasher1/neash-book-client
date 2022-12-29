@@ -7,6 +7,7 @@ import Login from "../components/shared/Authentication/Login";
 import Register from "../components/shared/Authentication/Register";
 import DisplayError from "../components/shared/DisplayError";
 import Main from "../layout/Main";
+import PrivateRoutes from "./PrivateRoutes/PrivateRoutes";
 
 const router = createBrowserRouter([
 
@@ -21,7 +22,7 @@ const router = createBrowserRouter([
             },
             {
                 path: '/media',
-                element: <Media></Media>
+                element: <PrivateRoutes><Media></Media></PrivateRoutes>
             },
             {
                 path: '/media/:_id',
