@@ -18,7 +18,7 @@ const router = createBrowserRouter([
         children: [
             {
                 path: '/',
-                element: <Home></Home>
+                element: <PrivateRoutes><Home></Home></PrivateRoutes>
             },
             {
                 path: '/media',

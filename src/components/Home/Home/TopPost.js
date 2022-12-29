@@ -1,12 +1,9 @@
 import { useQuery } from '@tanstack/react-query';
-import React, { useContext } from 'react';
-import { AuthContext } from '../../contexts/AuthProvider';
-import Spinner from '../shared/Spinner';
-import TopPost from './Home/TopPost';
-import MediaCard from './MediaCard';
+import React from 'react';
+import Spinner from '../../shared/Spinner';
+import MediaCard from '../MediaCard';
 
-const Media = () => {
-    const { user } = useContext(AuthContext);
+const TopPost = () => {
 
     const { data: posts = [], isLoading, refetch } = useQuery({
         queryKey: ['posts'],
@@ -39,4 +36,4 @@ const Media = () => {
     );
 };
 
-export default Media;
+export default TopPost;
