@@ -14,7 +14,7 @@ const ModalAbout = ({ user, university, address, id }) => {
             address: data.address
         }
         console.log(userObj);
-        fetch(`http://localhost:5000/users/${id}`, {
+        fetch(`https://neash-book-server.vercel.app/users/${id}`, {
             method: 'PUT',
             headers: {
                 'content-type': 'application/json'

@@ -31,7 +31,7 @@ const Post = () => {
                         photoURL: user?.photoURL
                     }
 
-                    fetch('http://localhost:5000/posts', {
+                    fetch('https://neash-book-server.vercel.app/posts', {
                         method: 'POST',
                         headers: {
                             'content-type': 'application/json',

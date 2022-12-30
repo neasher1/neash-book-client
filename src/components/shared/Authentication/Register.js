@@ -44,7 +44,7 @@ const Register = () => {
             email
         }
 
-        fetch('http://localhost:5000/users', {
+        fetch('https://neash-book-server.vercel.app/users', {
             method: 'POST',
             headers: {
                 'content-type': 'application/json',
@@ -54,7 +54,7 @@ const Register = () => {
             .then(res => res.json())
             .then(data => {
                 if (data.acknowledged) {
-                    fetch(`http://localhost:5000/jwt?email=${email}`)
+                    fetch(`https://neash-book-server.vercel.app/jwt?email=${email}`)
                         .then(res => res.json())
                         .then(data => {
                             if (data.accessToken) {
@@ -70,7 +70,7 @@ const Register = () => {
     const handleSignInGoogle = () => {
         signInWithGoogle(googleProvider)
             .then(res => {
-                fetch(`http://localhost:5000/jwt?email=${res.user.email}`)
+                fetch(`https://neash-book-server.vercel.app/jwt?email=${res.user.email}`)
                     .then(res => res.json())
                     .then(token => {
                         localStorage.setItem('accessToken', token.accessToken);
@@ -78,7 +78,7 @@ const Register = () => {
                             name: res.user.displayName,
                             email: res.user.email
                         };
-                        fetch('http://localhost:5000/users', {
+                        fetch('https://neash-book-server.vercel.app/users', {
                             method: 'POST',
                             headers: {
                                 'content-type': 'application/json'

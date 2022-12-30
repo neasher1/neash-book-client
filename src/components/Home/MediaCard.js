@@ -30,7 +30,7 @@ const MediaCard = ({ post }) => {
             react = (+reaction) - 1;
         }
 
-        fetch(`http://localhost:5000/postLike/${_id}`, {
+        fetch(`https://neash-book-server.vercel.app/postLike/${_id}`, {
             method: 'PUT',
             headers: {
                 'content-type': 'application/json'

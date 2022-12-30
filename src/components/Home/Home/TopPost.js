@@ -6,9 +6,9 @@ import MediaCard from '../MediaCard';
 const TopPost = () => {
 
     const { data: topPosts = [], isLoading, refetch } = useQuery({
-        queryKey: 'topPost',
+        queryKey: ['topPost'],
         queryFn: async () => {
-            const res = await fetch('http://localhost:5000/topPosts');
+            const res = await fetch('https://neash-book-server.vercel.app/topPosts');
             const data = await res.json();
             return data;
         }

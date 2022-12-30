@@ -26,7 +26,7 @@ const router = createBrowserRouter([
             },
             {
                 path: '/media/:_id',
-                loader: ({ params }) => fetch(`http://localhost:5000/posts/${params._id}`),
+                loader: ({ params }) => fetch(`https://neash-book-server.vercel.app/posts/${params._id}`),
                 element: <PostDetails></PostDetails>
             },
             {

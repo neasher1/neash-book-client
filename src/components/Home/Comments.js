@@ -21,7 +21,7 @@ const Comments = ({ comments, _id }) => {
             newObj.push(obj);
         }
 
-        fetch(`http://localhost:5000/postComments/${_id}`, {
+        fetch(`https://neash-book-server.vercel.app/postComments/${_id}`, {
             method: 'PUT',
             headers: {
                 'content-type': 'application/json'
