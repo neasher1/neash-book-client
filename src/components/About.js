@@ -1,94 +1,46 @@
+import { useQuery } from '@tanstack/react-query';
 import React, { useContext } from 'react';
 import { useForm } from 'react-hook-form';
 import { toast } from 'react-hot-toast';
 import { AuthContext } from '../contexts/AuthProvider';
+import ModalAbout from './ModalAbout';
+import Spinner from './shared/Spinner';
 
 const About = () => {
-    const { register, handleSubmit, formState: { errors } } = useForm();
     const { user } = useContext(AuthContext);
 
-    const handleProfile = (data) => {
-        const profile = {
-            name: data.name,
-            email: data.email,
-            university: data.university,
-            address: data.address
+    const { data: users = [], refetch, isLoading } = useQuery({
+        queryKey: ["user"],
+        queryFn: async () => {
+            const res = await fetch(`http://localhost:5000/users/?email=${user?.email}`);
+            const data = await res.json();
+            return data;
         }
-        fetch('http://localhost:5000/users', {
-            method: 'POST',
-            headers: {
-                'content-type': 'application/json',
-            },
-            body: JSON.stringify(profile)
-        })
-            .then(res => res.json())
-            .then(data => {
-                if (data.acknowledged) {
-                    fetch(`http://localhost:5000/jwt?email=${user?.email}`)
-                        .then(res => res.json())
-                        .then(data => {
-                            if (data.accessToken) {
-                                localStorage.setItem('accessToken', data.accessToken);
-                                toast.success("Profile Updated")
-                            }
-                        })
-                }
-            })
+    })
+    const { university, address, _id } = users;
+    refetch();
+    // console.log(users.body.name);
+
+    if (isLoading) {
+        return <Spinner></Spinner>
     }
 
 
     return (
-        <div className='my-12 mx-4'>
-            <div className='w-full card shadow-2xl p-8'>
-                <h2 className="text-4xl font-bold text-primary mb-4 text-center">About Me</h2>
-                <form onSubmit={handleSubmit(handleProfile)}>
-                    <div className="form-control w-full">
-                        <label className="label">
-                            <span className="label-text">Name</span>
-                        </label>
-                        <input type="text"
-                            {...register("name", {
-                                required: "name is required",
-                            })}
-                            className="input input-bordered" />
-                        {errors.name && <p className="text-error">{errors.name?.message}</p>}
-                    </div>
-                    <div className="form-control w-full">
-                        <label className="label">
-                            <span className="label-text">Email</span>
-                        </label>
-                        <input type="email"
-                            {...register("email", {
-                                required: "email address is required",
-                            })}
-                            className="input input-bordered" />
-                        {errors.email && <p className="text-error">{errors.email?.message}</p>}
-                    </div>
-                    <div className="form-control w-full">
-                        <label className="label">
-                            <span className="label-text">University</span>
-                        </label>
-                        <input type="text"
-                            {...register("university", {
-                                required: "university is required",
-                            })}
-                            className="input input-bordered" />
-                        {errors.university && <p className="text-error">{errors.university?.message}</p>}
-                    </div>
-                    <div className="form-control w-full">
-                        <label className="label">
-                            <span className="label-text">Address</span>
-                        </label>
-                        <input type="text"
-                            {...register("address", {
-                                required: "Address is required",
-                            })}
-                            className="input input-bordered" />
-                        {errors.address && <p className="text-error">{errors.address?.message}</p>}
-                    </div>
-                    <input className='btn btn-primary w-full text-white my-2' type="submit" value="Submit" />
-                </form>
+        <div className='flex md:justify-between flex-col md:flex-row px-2 md:px-0 gap-5 my-20 h-screen'>
+            <div className='w-full'><img src={user?.photoURL} alt="" /></div>
+            <div className='w-full'>
+                <div className=' flex gap-3'>
+                    <h3 className='text-2xl font-bold'>Name : {users?.body?.name}</h3>
+                    <label htmlFor="aboutModal" className='btn btn-square btn-ghost btn-sm w-6 h-3'><p>Edit</p></label>
+                </div>
+                <p className='text-sm text-gray-600 font-bold'> Email : {users?.body?.email}</p>
+                <p className='mt-3 font-semibold'>University : {users?.body?.university} </p>
+                <p className=' font-semibold'>Address : {users?.body?.address}</p>
             </div>
+
+            {/* Put this part before </body> tag */}
+            <ModalAbout user={user} address={address} university={university} id={_id}></ModalAbout>
         </div>
     );
 };

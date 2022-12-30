@@ -5,19 +5,14 @@ import MediaCard from '../MediaCard';
 
 const TopPost = () => {
 
-    const { data: posts = [], isLoading, refetch } = useQuery({
-        queryKey: ['posts'],
+    const { data: topPosts = [], isLoading, refetch } = useQuery({
+        queryKey: 'topPost',
         queryFn: async () => {
-            try {
-                const res = await fetch('http://localhost:5000/posts');
-                const data = await res.json();
-                return data;
-            }
-            catch (error) {
-                console.log(error);
-            }
+            const res = await fetch('http://localhost:5000/topPosts');
+            const data = await res.json();
+            return data;
         }
-    });
+    })
     refetch();
 
     if (isLoading) {
@@ -27,7 +22,7 @@ const TopPost = () => {
     return (
         <div className='grid grid-cols-1 mx-4 my-12'>
             {
-                posts.map(post => <MediaCard
+                topPosts.map(post => <MediaCard
                     key={post._id}
                     post={post}
                 ></MediaCard>)
